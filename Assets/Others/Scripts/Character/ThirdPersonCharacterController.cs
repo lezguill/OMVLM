@@ -11,10 +11,11 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private float gravity = -9.81f;
     public float gravityMultiplier = 1.5f;
-    private float velocity = 0f;
-    private bool jumped = true;
-    private bool running = false;
-    private bool walking = false;
+    private float verticalVelocity = 0f;
+    private bool isJumping = true;
+    private bool isRunning = false;
+    private bool isWalking = false;
+    private bool isGrounded= false;
 
     public float walkingSpeed;
     public float runningSpeed;
@@ -30,50 +31,59 @@ public class ThirdPersonCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ApplyGravity();
-        if (animator.GetBool("Alive"))
+        if (animator.GetBool("isAlive"))
         {
-            if (!animator.GetBool("Dialogue"))
+            if (!animator.GetBool("isDialoguing"))
             {
                 JumpManager();
                 MovementManager();
-                animator.SetBool("Grounded", controller.isGrounded);
-                animator.SetBool("Walking", walking);
-                animator.SetBool("Running", running);
             }
         }
     }
     private void MovementManager()
     {
+        // Get the vertical velocity right
+        CalculateGravity();
+
+        // Get the player's Input 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            running = true;
-        }
-        else
-        {
-            running = false;
-        }
-
+        
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
         Vector3 movement = Vector3.zero;
 
+        // Check if player is moving
         if (direction.magnitude >= 0.1f)
         {
-            walking = true;
+            isWalking = true;
+
+            // Check if player is running
+            if (Input.GetKey(KeyCode.LeftShift)) 
+            {
+                isRunning = true;
+            }
+            else 
+            {
+                isRunning = false;
+            }
         }
-        else
+        else 
         {
-            walking = false;
-            running = false;
+            isWalking = false; 
+            isRunning = false;
         }
 
-        if (walking)
+        // Update the animtor's states 
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isRunning", isRunning);
+
+        
+        if (isWalking)
         {
+            // Calculate the direction of the movement
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-            if (running)
+            if (isRunning)
             {
                 actualSpeed = runningSpeed;
             }
@@ -83,42 +93,57 @@ public class ThirdPersonCharacterController : MonoBehaviour
             }
             movement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * actualSpeed;
         }
-        movement.y = velocity;
-        ApplyMovement(movement);
-    }
 
-    private void ApplyMovement(Vector3 movement)
-    {
-        
+        // Add gravity or jump force
+        movement.y = verticalVelocity;
+
+        // Apply the force
         controller.Move(movement * Time.deltaTime);
+
     }
 
-    private void ApplyGravity()
+    private void CalculateGravity()
     {
-        if (controller.isGrounded && velocity<0)
+        if (controller.isGrounded && verticalVelocity < 0)
         {
-            velocity = -1f;
+            verticalVelocity = -1f;
         }
         else
         {
-            velocity += gravity * gravityMultiplier * Time.deltaTime;
+            verticalVelocity += gravity * gravityMultiplier * Time.deltaTime;
         }
     }
 
     private void JumpManager()
     {
-        if (Input.GetButtonDown("Jump") && controller.isGrounded && !jumped)
+        if (controller.isGrounded)
         {
-            velocity = jumpForce;
-            animator.SetTrigger("Jump");
-            jumped = true;
-        }
+            isGrounded = true;
+            animator.SetBool("isGrounded", isGrounded);
+            isJumping = false;
+            animator.SetBool("isJumping", isJumping);
 
-        if (animator.GetBool("Grounded") && jumped)
+            animator.SetBool("isFalling", false);
+
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                Debug.Log("Jumping");
+                verticalVelocity = jumpForce;
+                animator.SetBool("isJumping", true);
+                isJumping = true;
+            }
+        }
+        else 
         {
-            jumped = false;
-            animator.SetTrigger("Landing");
+            isGrounded = false;
+            animator.SetBool("isGrounded", isGrounded);
+
+            if ((isJumping && verticalVelocity < 0) || verticalVelocity <-2)
+            {
+                Debug.Log("Falling");
+                animator.SetBool("isFalling", true);
+            }
         }
     }
-
 }

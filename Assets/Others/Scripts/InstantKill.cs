@@ -9,8 +9,8 @@ public class InstantKill : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Animator>().SetTrigger("Death");
-            other.GetComponent<Animator>().SetBool("Alive", false);
+            other.GetComponent<Animator>().SetTrigger("DeathAction");
+            other.GetComponent<Animator>().SetBool("isAlive", false);
             deathSound.Play();
         }
     }

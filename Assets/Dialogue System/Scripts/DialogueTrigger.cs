@@ -14,16 +14,16 @@ namespace HeneGames.DialogueSystem
 
         public void StartDialogue()
         {
-            GetComponent<Animator>().SetBool("Dialogue", true);
-            GetComponent<Animator>().SetTrigger("Dialoguing");
+            GetComponent<Animator>().SetBool("isDialoguing", true);
+            GetComponent<Animator>().SetTrigger("DialogueAction");
         }
         public void EndDialogue()
         {
-            GetComponent<Animator>().SetBool("Dialogue", false);
+            GetComponent<Animator>().SetBool("isDialoguing", false);
         }
-        public void SetDialoguing()
+        public void DialogueAction()
         {
-            GetComponent<Animator>().SetTrigger("Dialoguing");
+            GetComponent<Animator>().SetTrigger("DialogueAction");
         }
     }
 }
