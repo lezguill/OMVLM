@@ -5,9 +5,12 @@ using UnityEngine;
 public class ThirdPersonCharacterController : MonoBehaviour
 {
 
-    public CharacterController controller;
-    public Animator animator;
-    public Transform camera;
+    public CharacterController ctrl;
+    public Animator anim;
+    public Transform mainCam;
+    public GameObject moveCam;
+    public GameObject aimCam;
+    public GameObject crosshair;
 
     private float gravity = -9.81f;
     public float gravityMultiplier = 1.5f;
@@ -15,7 +18,9 @@ public class ThirdPersonCharacterController : MonoBehaviour
     private bool isJumping = true;
     private bool isRunning = false;
     private bool isWalking = false;
-    private bool isGrounded= false;
+    private bool isGrounded = false;
+
+    private bool isAiming = false;
 
     public float walkingSpeed;
     public float runningSpeed;
@@ -31,12 +36,13 @@ public class ThirdPersonCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (animator.GetBool("isAlive"))
+        if (anim.GetBool("isAlive"))
         {
-            if (!animator.GetBool("isDialoguing"))
+            if (!anim.GetBool("isDialoguing"))
             {
                 JumpManager();
                 MovementManager();
+                AimManager();
             }
         }
     }
@@ -45,66 +51,69 @@ public class ThirdPersonCharacterController : MonoBehaviour
         // Get the vertical velocity right
         CalculateGravity();
 
-        // Get the player's Input 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
         Vector3 movement = Vector3.zero;
-
-        // Check if player is moving
-        if (direction.magnitude >= 0.1f)
+        
+        if (!isAiming)
         {
-            isWalking = true;
+            // Get the player's Input 
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");      
 
-            // Check if player is running
-            if (Input.GetKey(KeyCode.LeftShift)) 
+            Vector3 direction = new Vector3(horizontal, 0f, vertical);
+
+            // Check if player is moving
+            if (direction.magnitude >= 0.1f)
             {
-                isRunning = true;
+                isWalking = true;
+
+                // Check if player is running
+                if (Input.GetKey(KeyCode.LeftShift)) 
+                {
+                    isRunning = true;
+                }
+                else 
+                {
+                    isRunning = false;
+                }
             }
             else 
             {
+                isWalking = false; 
                 isRunning = false;
             }
-        }
-        else 
-        {
-            isWalking = false; 
-            isRunning = false;
-        }
 
-        // Update the animtor's states 
-        animator.SetBool("isWalking", isWalking);
-        animator.SetBool("isRunning", isRunning);
-
+            // Update the animtor's states 
+            anim.SetBool("isWalking", isWalking);
+            anim.SetBool("isRunning", isRunning);
         
-        if (isWalking)
-        {
-            // Calculate the direction of the movement
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-            if (isRunning)
+            if (isWalking)
             {
-                actualSpeed = runningSpeed;
+                // Calculate the direction of the movement
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+                transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                if (isRunning)
+                {
+                    actualSpeed = runningSpeed;
+                }
+                else
+                {
+                    actualSpeed = walkingSpeed;
+                }
+                movement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * actualSpeed;
             }
-            else
-            {
-                actualSpeed = walkingSpeed;
-            }
-            movement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * actualSpeed;
         }
 
         // Add gravity or jump force
         movement.y = verticalVelocity;
 
         // Apply the force
-        controller.Move(movement * Time.deltaTime);
+        ctrl.Move(movement * Time.deltaTime);
 
     }
 
     private void CalculateGravity()
     {
-        if (controller.isGrounded && verticalVelocity < 0)
+        if (ctrl.isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = -1f;
         }
@@ -116,34 +125,61 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private void JumpManager()
     {
-        if (controller.isGrounded)
+        if (ctrl.isGrounded)
         {
             isGrounded = true;
-            animator.SetBool("isGrounded", isGrounded);
+            anim.SetBool("isGrounded", isGrounded);
             isJumping = false;
-            animator.SetBool("isJumping", isJumping);
+            anim.SetBool("isJumping", isJumping);
 
-            animator.SetBool("isFalling", false);
+            anim.SetBool("isFalling", false);
 
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && !isAiming)
             {
                 Debug.Log("Jumping");
                 verticalVelocity = jumpForce;
-                animator.SetBool("isJumping", true);
+                anim.SetBool("isJumping", true);
                 isJumping = true;
             }
         }
         else 
         {
             isGrounded = false;
-            animator.SetBool("isGrounded", isGrounded);
+            anim.SetBool("isGrounded", isGrounded);
 
             if ((isJumping && verticalVelocity < 0) || verticalVelocity <-2)
             {
                 Debug.Log("Falling");
-                animator.SetBool("isFalling", true);
+                anim.SetBool("isFalling", true);
             }
         }
     }
+
+    private void AimManager()
+    {
+        if (Input.GetButton("Aim") && !aimCam.activeInHierarchy)
+        {
+            isAiming = true;
+            moveCam.SetActive(false);
+            aimCam.SetActive(true);
+            this.transform.rotation = Quaternion.Euler(0f, mainCam.transform.eulerAngles.y, 0f);
+            anim.SetBool("isWalking", false);
+            StartCoroutine(ShowCrosshair());            
+        }
+        else if (!Input.GetButton("Aim") && !moveCam.activeInHierarchy)
+        {
+            isAiming = false;
+            aimCam.SetActive(false); 
+            moveCam.SetActive(true);
+            crosshair.SetActive(false);
+        }
+    }
+
+    IEnumerator ShowCrosshair()
+    {
+        yield return new WaitForSeconds(0.25f);
+        crosshair.SetActive(true);
+    }
+        
 }
