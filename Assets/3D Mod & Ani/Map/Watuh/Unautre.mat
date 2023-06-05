@@ -53,6 +53,6 @@ Material:
     - _RIppleSp: 1.5
     - _RippleDensity: 7
     m_Colors:
-    - _Blu: {r: 0, g: 0.7547884, b: 1, a: 0.5529412}
+    - _Blu: {r: 0.19752577, g: 0.6141478, b: 0.764151, a: 0.5529412}
     - _RippleCol: {r: 0.63584906, g: 0.8890667, b: 1, a: 0}
   m_BuildTextureStacks: []
