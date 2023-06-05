@@ -137,7 +137,6 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
             if (Input.GetButtonDown("Jump") && !isAiming)
             {
-                Debug.Log("Jumping");
                 verticalVelocity = jumpForce;
                 anim.SetBool("isJumping", true);
                 isJumping = true;
@@ -150,7 +149,6 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
             if ((isJumping && verticalVelocity < 0) || verticalVelocity <-2)
             {
-                Debug.Log("Falling");
                 anim.SetBool("isFalling", true);
             }
         }
