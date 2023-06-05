@@ -20,7 +20,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     private bool isWalking = false;
     private bool isGrounded = false;
 
-    private bool isAiming = false;
+    public bool isAiming = false;
 
     public float walkingSpeed;
     public float runningSpeed;
@@ -156,7 +156,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private void AimManager()
     {
-        if (Input.GetButton("Aim") && !aimCam.activeInHierarchy)
+        if (Input.GetButton("Aim") && !isAiming)
         {
             isAiming = true;
             moveCam.SetActive(false);
@@ -165,12 +165,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
             anim.SetBool("isWalking", false);
             StartCoroutine(ShowCrosshair());            
         }
-        else if (!Input.GetButton("Aim") && !moveCam.activeInHierarchy)
+        else if (!Input.GetButton("Aim") && isAiming)
         {
-            isAiming = false;
             aimCam.SetActive(false); 
             moveCam.SetActive(true);
             crosshair.SetActive(false);
+            StartCoroutine(GetOutOfAimingMode());
         }
     }
 
@@ -179,5 +179,11 @@ public class ThirdPersonCharacterController : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         crosshair.SetActive(true);
     }
-        
+
+    IEnumerator GetOutOfAimingMode()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isAiming = false;
+    }
+
 }
