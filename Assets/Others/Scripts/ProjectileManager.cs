@@ -111,7 +111,7 @@ public class ProjectileManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (!isReady && !willAttack && !! willRecover)
+            if (!isReady && !willAttack && willRecover)
             {
                 willRecover = false;
                 isReady = true;

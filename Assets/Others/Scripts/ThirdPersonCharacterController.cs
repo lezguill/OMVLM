@@ -163,10 +163,13 @@ public class ThirdPersonCharacterController : MonoBehaviour
         {
             isAiming = true;
             moveCam.SetActive(false);
-            aimCam.SetActive(true);
-            this.transform.rotation = Quaternion.Euler(0f, mainCam.transform.eulerAngles.y, 0f);
+            if (aimCam != null)
+            {
+                aimCam.SetActive(true);
+            }
+            // this.transform.rotation = Quaternion.Euler(0f, mainCam.transform.eulerAngles.y, 0f); Aim towards camera
             anim.SetBool("isWalking", false);
-            StartCoroutine(ShowCrosshair());
+            // StartCoroutine(ShowCrosshair());
         }
         else if (Input.GetButtonDown("Aim") && isAiming)
         {
@@ -188,9 +191,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     public void ExitAimingMode()
     {
-        aimCam.SetActive(false);
+        if (aimCam != null)
+        {
+            aimCam.SetActive(false);
+        }
         moveCam.SetActive(true);
-        crosshair.SetActive(false);
+        // crosshair.SetActive(false);
         StartCoroutine(GetOutOfAimingMode());
     }
 }
