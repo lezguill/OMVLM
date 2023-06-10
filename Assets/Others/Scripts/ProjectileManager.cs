@@ -14,7 +14,7 @@ public class ProjectileManager : MonoBehaviour
     public bool willAttack = false; // if the ball is ready to be thrown
     public bool willRecover = false; // if the ball is ready to recover
     public bool isReady = true; // if the ball is ready to be charged
-    public bool isAiming;
+    public bool isAiming = false;
     public bool canTravel = true; // if the ball can still move towards where it should go depending on the state
 
     public float recoverySpeed = 4f;
@@ -30,19 +30,16 @@ public class ProjectileManager : MonoBehaviour
     private Vector3 attackPosition;
 
     private void Update()
-    {
-
-         isAiming = character.isAiming;
-
-        if (isAiming && isReady)
+    { 
+        if (character.isAiming && isReady)
         {
+            if (!willAttack) { startingPosition = transform.position; }
         // Charging State: while right click is hold & the ball is ready
             if (canTravel)
             {
-                chargingPosition = target.position + Vector3.right * aimingOffset;
+                chargingPosition = target.position + Vector3.up * aimingOffset;
                 canTravel = CanTravelTowards(chargingPosition, defaultSpeed);
                 power += 0.1f;
-                startingPosition = transform.position;
                 attackPosition = startingPosition + character.transform.forward * range;
                 willAttack = true;
             }
@@ -59,13 +56,16 @@ public class ProjectileManager : MonoBehaviour
             {
                 if (canTravel)
                 {
+                    character.ExitAimingMode();
                     canTravel = CanTravelTowards(attackPosition, attackSpeed);
                     willRecover = true;
+                    isReady = false;
                 }
-                else if (isAiming) // To start recovery press right click
+                else if (Input.GetButton("Aim")) // To start recovery press right click
                 {
                     willAttack = false;
                     canTravel = true;
+                    isReady = false;
                 }
             }
             else if (willRecover)
@@ -75,6 +75,7 @@ public class ProjectileManager : MonoBehaviour
                 {
                     recoveryPosition = target.position;
                     canTravel = CanTravelTowards(recoveryPosition, recoverySpeed);
+                    isReady = false;
                 }
                 else
                 {
@@ -86,11 +87,8 @@ public class ProjectileManager : MonoBehaviour
             else if (isReady)
             // Neutral State: if not in any other state - ball follows target
             {
-                willRecover = false;
-                willAttack = false;
                 CanTravelTowards(target.position, followSpeed);
-                canTravel = true;
-                isReady = true;
+                ResetStates();
             }
         }
     }
@@ -113,10 +111,20 @@ public class ProjectileManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            willRecover = false;
-            willAttack = false;
-            canTravel = true;
-            isReady = true;
+            if (!isReady && !willAttack && !! willRecover)
+            {
+                willRecover = false;
+                isReady = true;
+            }
         }
+    }
+
+    private void ResetStates()
+    {
+        willRecover = false;
+        willAttack = false;
+        canTravel = true;
+        isReady = true;
+        power = 0f;
     }
 }

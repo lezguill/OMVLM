@@ -7,12 +7,13 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     public CharacterController ctrl;
     public Animator anim;
-    public Transform mainCam;
+    public GameObject mainCam;
     public GameObject moveCam;
     public GameObject aimCam;
     public GameObject crosshair;
     public ProjectileManager projectile;
 
+    private float aimingTransitionTime;
     private float gravity = -9.81f;
     public float gravityMultiplier = 1.5f;
     private float verticalVelocity = 0f;
@@ -32,6 +33,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        aimingTransitionTime = mainCam.GetComponent<Cinemachine.CinemachineBrain>().m_DefaultBlend.m_Time;
     }
 
     // Update is called once per frame
@@ -53,12 +55,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
         CalculateGravity();
 
         Vector3 movement = Vector3.zero;
-        
+
         if (!isAiming)
         {
             // Get the player's Input 
             float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");      
+            float vertical = Input.GetAxisRaw("Vertical");
 
             Vector3 direction = new Vector3(horizontal, 0f, vertical);
 
@@ -68,25 +70,25 @@ public class ThirdPersonCharacterController : MonoBehaviour
                 isWalking = true;
 
                 // Check if player is running
-                if (Input.GetKey(KeyCode.LeftShift)) 
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     isRunning = true;
                 }
-                else 
+                else
                 {
                     isRunning = false;
                 }
             }
-            else 
+            else
             {
-                isWalking = false; 
+                isWalking = false;
                 isRunning = false;
             }
 
             // Update the animtor's states 
             anim.SetBool("isWalking", isWalking);
             anim.SetBool("isRunning", isRunning);
-        
+
             if (isWalking)
             {
                 // Calculate the direction of the movement
@@ -143,12 +145,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
                 isJumping = true;
             }
         }
-        else 
+        else
         {
             isGrounded = false;
             anim.SetBool("isGrounded", isGrounded);
 
-            if ((isJumping && verticalVelocity < 0) || verticalVelocity <-2)
+            if ((isJumping && verticalVelocity < 0) || verticalVelocity < -2)
             {
                 anim.SetBool("isFalling", true);
             }
@@ -157,34 +159,38 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private void AimManager()
     {
-        if (Input.GetButton("Aim") && !isAiming && projectile.isReady)
+        if (Input.GetButtonDown("Aim") && !isAiming && projectile.isReady)
         {
             isAiming = true;
             moveCam.SetActive(false);
             aimCam.SetActive(true);
             this.transform.rotation = Quaternion.Euler(0f, mainCam.transform.eulerAngles.y, 0f);
             anim.SetBool("isWalking", false);
-            StartCoroutine(ShowCrosshair());            
+            StartCoroutine(ShowCrosshair());
         }
-        else if (!Input.GetButton("Aim") && isAiming)
+        else if (Input.GetButtonDown("Aim") && isAiming)
         {
-            aimCam.SetActive(false); 
-            moveCam.SetActive(true);
-            crosshair.SetActive(false);
-            StartCoroutine(GetOutOfAimingMode());
+            ExitAimingMode();
         }
     }
 
     IEnumerator ShowCrosshair()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(aimingTransitionTime);
         crosshair.SetActive(true);
     }
 
     IEnumerator GetOutOfAimingMode()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(aimingTransitionTime);
         isAiming = false;
     }
 
+    public void ExitAimingMode()
+    {
+        aimCam.SetActive(false);
+        moveCam.SetActive(true);
+        crosshair.SetActive(false);
+        StartCoroutine(GetOutOfAimingMode());
+    }
 }
