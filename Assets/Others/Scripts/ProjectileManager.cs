@@ -51,7 +51,6 @@ public class ProjectileManager : MonoBehaviour
                 isReady = false;
                 canTravel = true;
             }
-            Debug.Log("Charging State");
         }
         else
         {
@@ -68,7 +67,6 @@ public class ProjectileManager : MonoBehaviour
                     willAttack = false;
                     canTravel = true;
                 }
-                Debug.Log("Attacking State");
             }
             else if (willRecover)
             // Revcovery State: after Attacking State & right click pressed
@@ -84,7 +82,6 @@ public class ProjectileManager : MonoBehaviour
                     isReady = true;
                     canTravel = true;
                 }
-                Debug.Log("Recovery State");
             }
             else if (isReady)
             // Neutral State: if not in any other state - ball follows target
@@ -94,7 +91,6 @@ public class ProjectileManager : MonoBehaviour
                 CanTravelTowards(target.position, followSpeed);
                 canTravel = true;
                 isReady = true;
-                Debug.Log("Neutral State");
             }
         }
     }
