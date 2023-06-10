@@ -11,6 +11,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public GameObject moveCam;
     public GameObject aimCam;
     public GameObject crosshair;
+    public ProjectileManager projectile;
 
     private float gravity = -9.81f;
     public float gravityMultiplier = 1.5f;
@@ -156,7 +157,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private void AimManager()
     {
-        if (Input.GetButton("Aim") && !isAiming)
+        if (Input.GetButton("Aim") && !isAiming && projectile.isReady)
         {
             isAiming = true;
             moveCam.SetActive(false);
