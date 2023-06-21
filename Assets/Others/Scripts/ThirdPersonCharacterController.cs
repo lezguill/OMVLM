@@ -9,7 +9,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public Animator anim;
     public GameObject mainCam;
     public GameObject moveCam;
-    public GameObject aimCam;
+    public GameObject aimCam=null;
     public GameObject crosshair;
     public ProjectileManager projectile;
 
@@ -162,7 +162,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
         if (Input.GetButtonDown("Aim") && !isAiming && projectile.isReady)
         {
             isAiming = true;
-            moveCam.SetActive(false);
+            // moveCam.SetActive(false);
             if (aimCam != null)
             {
                 aimCam.SetActive(true);
