@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
 
     public Transform player;
-
+    public Animator anim;
     public LayerMask whatIsGround, whatIsPlayer;
 
     public float health;
@@ -20,8 +20,6 @@ public class EnemyAI : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
-
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
@@ -34,13 +32,36 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        if (anim.GetBool("isAlive"))
+        {
+            //Check for sight and attack range
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+            if (!playerInSightRange && !playerInAttackRange)
+            {
+                Patroling();
+                anim.SetBool("isWalking", true);
+                anim.SetBool("isRunning", false);
+                anim.SetBool("isAttacking", false);
+            }
+            if (playerInSightRange && !playerInAttackRange)
+            {
+                ChasePlayer();
+                anim.SetBool("isRunning", true);
+                anim.SetBool("isAttacking", false);
+            }
+            if (playerInAttackRange && playerInSightRange)
+            {
+                if (!anim.GetBool("isAttacking"))
+                {
+                    AttackPlayer();
+                    anim.SetTrigger("Attack");
+                    anim.SetBool("isAttacking", true);
+                }
+                
+            }
+        }
     }
 
     private void Patroling()
@@ -78,15 +99,14 @@ public class EnemyAI : MonoBehaviour
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.LookAt(player.position);
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+
 
         if (!alreadyAttacked)
         {
-            ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            ///End of attack code
+            Attack();
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -95,6 +115,11 @@ public class EnemyAI : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+    private void Attack()
+    {
+        // Collision
+        // Damage
     }
 
     public void TakeDamage(int damage)

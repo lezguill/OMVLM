@@ -2209,6 +2209,32 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!1 &1192860199 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2462656466990824142, guid: d474269fbf5e95f4e81c549013f730a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3381205873845990482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1192860203
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192860199}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ab13671b157bed4e83e9035ca1bf40d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1001 &1207075188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6006,6 +6032,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3381205873653271505, guid: d474269fbf5e95f4e81c549013f730a5,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1192860203}
     - target: {fileID: 3381205873653271505, guid: d474269fbf5e95f4e81c549013f730a5,
         type: 3}
       propertyPath: player
