@@ -38,28 +38,20 @@ public class EnemyAI : MonoBehaviour
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-            if (!playerInSightRange && !playerInAttackRange)
+            if (!playerInSightRange && !playerInAttackRange && !anim.GetBool("isAttacking"))
             {
                 Patroling();
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
-                anim.SetBool("isAttacking", false);
             }
-            if (playerInSightRange && !playerInAttackRange)
+            else if (playerInSightRange && !playerInAttackRange && !anim.GetBool("isAttacking"))
             {
                 ChasePlayer();
                 anim.SetBool("isRunning", true);
-                anim.SetBool("isAttacking", false);
             }
-            if (playerInAttackRange && playerInSightRange)
+            else if (playerInAttackRange && playerInSightRange && !anim.GetBool("isAttacking"))
             {
-                if (!anim.GetBool("isAttacking"))
-                {
-                    AttackPlayer();
-                    anim.SetTrigger("Attack");
-                    anim.SetBool("isAttacking", true);
-                }
-                
+                AttackPlayer();
             }
         }
     }
@@ -99,15 +91,19 @@ public class EnemyAI : MonoBehaviour
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
-        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
-        transform.LookAt(player.position);
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        
 
 
         if (!alreadyAttacked)
         {
-            Attack();
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            transform.LookAt(player.position);
+            transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
 
+            Attack(); // TO COMPLETE
+
+            anim.SetTrigger("Attack");
+            anim.SetBool("isAttacking", true);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -115,6 +111,7 @@ public class EnemyAI : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+        anim.SetBool("isAttacking", false);
     }
     private void Attack()
     {
