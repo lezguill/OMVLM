@@ -104,27 +104,26 @@ public class EnemyAI : MonoBehaviour
             transform.LookAt(player.position);
             transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
 
-            Attack(); // TO COMPLETE
-
             anim.SetTrigger("Attack");
             anim.SetBool("isAttacking", true);
             alreadyAttacked = true;
+            Invoke(nameof(Attack), timeBetweenAttacks * 0.6f);
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            
         }
     }
     private void ResetAttack()
     {
-        if (attackCollision.touchingPlayer)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(attackDamage);
-        }
+
         alreadyAttacked = false;
         anim.SetBool("isAttacking", false);
     }
     private void Attack()
     {
-        // Collision
-        // Damage
+        if (attackCollision.touchingPlayer)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(attackDamage);
+        }
     }
 
     public void TakeDamage(int damage)
