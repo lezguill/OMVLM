@@ -12,6 +12,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public GameObject aimCam=null;
     public GameObject crosshair;
     public ProjectileManager projectile;
+    public AudioSource deathSound;
 
     private float aimingTransitionTime;
     private float gravity = -9.81f;
@@ -48,6 +49,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
                 AimManager();
             }
         }
+    }
+    public void Die()
+    {
+        anim.SetBool("isAlive", false);
+        anim.SetTrigger("DeathAction");
+        deathSound.Play();
     }
     private void MovementManager()
     {
