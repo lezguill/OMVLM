@@ -11,7 +11,6 @@ public class EnemyAI : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer;
     public float walkingSpeed = 2f;
     public float runningSpeed = 4f;
-    public float health;
     public int attackDamage = 20;
     //Patroling
     public Vector3 walkPoint;
@@ -125,19 +124,13 @@ public class EnemyAI : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(attackDamage);
         }
     }
-
-    public void TakeDamage(int damage)
+    public void Die()
     {
-        health -= damage;
-
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
+        anim.SetBool("isAlive", false);
+        anim.SetTrigger("DeathAction");
     }
 
-    private void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);

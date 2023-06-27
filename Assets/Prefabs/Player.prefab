@@ -894,6 +894,7 @@ MonoBehaviour:
   crosshair: {fileID: 0}
   projectile: {fileID: 0}
   deathSound: {fileID: 4787796067120977758}
+  turnSmoothTime: 0.05
   gravityMultiplier: 3
   isAiming: 0
   walkingSpeed: 5
