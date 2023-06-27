@@ -10,7 +10,7 @@ public class ProjectileManager : MonoBehaviour
     public ThirdPersonCharacterController character;
     public float aimingOffset = 2f;
 
-
+    public bool isAttacking = false;
     public bool willAttack = false; // if the ball is ready to be thrown
     public bool willRecover = false; // if the ball is ready to recover
     public bool isReady = true; // if the ball is ready to be charged
@@ -23,6 +23,7 @@ public class ProjectileManager : MonoBehaviour
     public float defaultSpeed = 5f; // The speed at which the object moves towards a destination
     public float range = 10f; // The distance from the object to the target position
     public float power = 0; // multiplier that goes up when charging
+    public float baseDamage = 10;
 
     private Vector3 startingPosition;
     private Vector3 chargingPosition;
@@ -37,10 +38,10 @@ public class ProjectileManager : MonoBehaviour
         // Charging State: while right click is hold & the ball is ready
             if (canTravel || Input.GetButtonUp("Aim") || Input.GetButtonDown("Aim"))
             {
-                chargingPosition = target.position + Vector3.up * aimingOffset;
+                chargingPosition = target.position + (Vector3.right+Vector3.up) * aimingOffset;
                 canTravel = CanTravelTowards(chargingPosition, defaultSpeed);
                 power += 0.1f;
-                attackPosition = startingPosition + character.transform.forward * range;
+                attackPosition = startingPosition + character.transform.forward * range * power;
                 willAttack = true;
             }
             else
@@ -58,6 +59,7 @@ public class ProjectileManager : MonoBehaviour
                 {
                     character.ExitAimingMode();
                     canTravel = CanTravelTowards(attackPosition, attackSpeed);
+                    isAttacking = canTravel;
                     willRecover = true;
                     isReady = false;
                 }
@@ -111,10 +113,17 @@ public class ProjectileManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (!isReady && !willAttack && willRecover)
+            if ((willAttack || willRecover) && !isAttacking && !isAiming)
             {
-                willRecover = false;
-                isReady = true;
+                ResetStates();
+            }
+        }       
+        if (other.CompareTag("Enemy"))
+        {
+            if (isAttacking)
+            {
+                other.gameObject.GetComponent<EnemyHealth>().TakeDamage(Mathf.CeilToInt(baseDamage * power));
+                
             }
         }
     }

@@ -15,6 +15,8 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public AudioSource deathSound;
 
     private float aimingTransitionTime;
+    public float turnSmoothTime;
+    float turnSmoothVelocity;
     private float gravity = -9.81f;
     public float gravityMultiplier = 1.5f;
     private float verticalVelocity = 0f;
@@ -100,7 +102,8 @@ public class ThirdPersonCharacterController : MonoBehaviour
             {
                 // Calculate the direction of the movement
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
-                transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 if (isRunning)
                 {
                     actualSpeed = runningSpeed;
@@ -109,7 +112,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
                 {
                     actualSpeed = walkingSpeed;
                 }
-                movement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * actualSpeed;
+                movement = transform.forward * actualSpeed;
             }
         }
 
