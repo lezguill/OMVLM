@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InstantKill : MonoBehaviour
 {
-    public AudioSource deathSound;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
