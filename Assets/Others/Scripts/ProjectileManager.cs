@@ -36,7 +36,7 @@ public class ProjectileManager : MonoBehaviour
         {
             if (!willAttack) { startingPosition = transform.position; }
         // Charging State: while right click is hold & the ball is ready
-            if (canTravel || Input.GetButtonUp("Aim") || Input.GetButtonDown("Aim"))
+            if (canTravel == false || (!Input.GetButtonUp("Aim") && !Input.GetButtonDown("Aim")) == false)
             {
                 chargingPosition = target.position + (Vector3.right+Vector3.up) * aimingOffset;
                 canTravel = CanTravelTowards(chargingPosition, defaultSpeed);
