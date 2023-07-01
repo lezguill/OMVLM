@@ -505,7 +505,6 @@ GameObject:
   - component: {fileID: 218176507}
   - component: {fileID: 218176510}
   - component: {fileID: 218176509}
-  - component: {fileID: 218176508}
   m_Layer: 0
   m_Name: CartoonWater (2)
   m_TagString: Untagged
@@ -528,20 +527,6 @@ Transform:
   m_Father: {fileID: 1651043353}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &218176508
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218176506}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &218176509
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -957,7 +942,6 @@ GameObject:
   - component: {fileID: 324368030}
   - component: {fileID: 324368033}
   - component: {fileID: 324368032}
-  - component: {fileID: 324368031}
   m_Layer: 0
   m_Name: CartoonWater (1)
   m_TagString: Untagged
@@ -980,20 +964,6 @@ Transform:
   m_Father: {fileID: 1651043353}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &324368031
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324368029}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &324368032
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1278,7 +1248,6 @@ GameObject:
   - component: {fileID: 389616832}
   - component: {fileID: 389616831}
   - component: {fileID: 389616830}
-  - component: {fileID: 389616829}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1286,20 +1255,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &389616829
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 389616828}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &389616830
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3204,7 +3159,6 @@ GameObject:
   - component: {fileID: 878099950}
   - component: {fileID: 878099953}
   - component: {fileID: 878099952}
-  - component: {fileID: 878099951}
   m_Layer: 0
   m_Name: CartoonWater (4)
   m_TagString: Untagged
@@ -3227,20 +3181,6 @@ Transform:
   m_Father: {fileID: 1651043353}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &878099951
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878099949}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &878099952
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3566,12 +3506,12 @@ PrefabInstance:
     - target: {fileID: 1735715788314245152, guid: 4012ae4f974826a4689b88f7853f5efc,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.11921502
+      value: -0.119215034
       objectReference: {fileID: 0}
     - target: {fileID: 1735715788314245152, guid: 4012ae4f974826a4689b88f7853f5efc,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.01043833
+      value: -0.010438331
       objectReference: {fileID: 0}
     - target: {fileID: 1735715788314245152, guid: 4012ae4f974826a4689b88f7853f5efc,
         type: 3}
@@ -3581,7 +3521,7 @@ PrefabInstance:
     - target: {fileID: 1735715788314245152, guid: 4012ae4f974826a4689b88f7853f5efc,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0865983
+      value: -0.08659829
       objectReference: {fileID: 0}
     - target: {fileID: 1735715788349746316, guid: 4012ae4f974826a4689b88f7853f5efc,
         type: 3}
@@ -4674,26 +4614,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bfdea5434971d47b84122d57997a24, type: 3}
---- !u!1 &1240894262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8700725330082129686, guid: 9e3a9b11bfefdb949b571feb203c7de4,
-    type: 3}
-  m_PrefabInstance: {fileID: 271985911}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1240894266
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240894262}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6239881831769578202, guid: 9e3a9b11bfefdb949b571feb203c7de4, type: 3}
 --- !u!1001 &1241813485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4774,7 +4694,6 @@ GameObject:
   - component: {fileID: 1246999512}
   - component: {fileID: 1246999511}
   - component: {fileID: 1246999510}
-  - component: {fileID: 1246999509}
   m_Layer: 0
   m_Name: CartoonWater
   m_TagString: Untagged
@@ -4782,20 +4701,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1246999509
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246999508}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1246999510
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8377,7 +8282,6 @@ GameObject:
   - component: {fileID: 2000498402}
   - component: {fileID: 2000498405}
   - component: {fileID: 2000498404}
-  - component: {fileID: 2000498403}
   m_Layer: 0
   m_Name: CartoonWater (5)
   m_TagString: Untagged
@@ -8400,20 +8304,6 @@ Transform:
   m_Father: {fileID: 1651043353}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2000498403
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000498401}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2000498404
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8475,7 +8365,6 @@ GameObject:
   - component: {fileID: 2004915394}
   - component: {fileID: 2004915397}
   - component: {fileID: 2004915396}
-  - component: {fileID: 2004915395}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -8498,20 +8387,6 @@ Transform:
   m_Father: {fileID: 1651043353}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2004915395
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004915393}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2004915396
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9170,7 +9045,6 @@ GameObject:
   - component: {fileID: 2127871614}
   - component: {fileID: 2127871617}
   - component: {fileID: 2127871616}
-  - component: {fileID: 2127871615}
   m_Layer: 0
   m_Name: CartoonWater (3)
   m_TagString: Untagged
@@ -9193,20 +9067,6 @@ Transform:
   m_Father: {fileID: 1651043353}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2127871615
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127871613}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2127871616
 MeshRenderer:
   m_ObjectHideFlags: 0
