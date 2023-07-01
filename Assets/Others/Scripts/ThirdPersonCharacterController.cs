@@ -9,8 +9,8 @@ public class ThirdPersonCharacterController : MonoBehaviour
     public Animator anim;
     public GameObject mainCam;
     public GameObject moveCam;
-    public GameObject aimCam=null;
-    public GameObject crosshair;
+    //public GameObject aimCam=null;
+    //public GameObject crosshair;
     public ProjectileManager projectile;
     public AudioSource deathSound;
 
@@ -172,12 +172,14 @@ public class ThirdPersonCharacterController : MonoBehaviour
         if (Input.GetButtonDown("Aim") && !isAiming && projectile.isReady)
         {
             isAiming = true;
-            // moveCam.SetActive(false);
+            /*
+            moveCam.SetActive(false);
             if (aimCam != null)
             {
                 aimCam.SetActive(true);
             }
-            // this.transform.rotation = Quaternion.Euler(0f, mainCam.transform.eulerAngles.y, 0f); Aim towards camera
+            this.transform.rotation = Quaternion.Euler(0f, mainCam.transform.eulerAngles.y, 0f); Aim towards camera
+            */
             anim.SetBool("isWalking", false);
             // StartCoroutine(ShowCrosshair());
         }
@@ -190,7 +192,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     IEnumerator ShowCrosshair()
     {
         yield return new WaitForSeconds(aimingTransitionTime);
-        crosshair.SetActive(true);
+        // crosshair.SetActive(true);
     }
 
     IEnumerator GetOutOfAimingMode()
@@ -201,10 +203,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     public void ExitAimingMode()
     {
+        /*
         if (aimCam != null)
         {
             aimCam.SetActive(false);
         }
+        */
         moveCam.SetActive(true);
         // crosshair.SetActive(false);
         StartCoroutine(GetOutOfAimingMode());

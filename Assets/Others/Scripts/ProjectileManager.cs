@@ -128,7 +128,7 @@ public class ProjectileManager : MonoBehaviour
         }
     }
 
-    private void ResetStates()
+    public void ResetStates()
     {
         willRecover = false;
         willAttack = false;
