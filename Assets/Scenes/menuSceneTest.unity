@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 374717641}
   - component: {fileID: 374717640}
   - component: {fileID: 374717639}
+  - component: {fileID: 374717642}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -207,6 +208,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &374717642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374717638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &424012280
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +441,8 @@ GameObject:
   - component: {fileID: 772336968}
   - component: {fileID: 772336969}
   - component: {fileID: 772336970}
+  - component: {fileID: 772336971}
+  - component: {fileID: 772336972}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -512,14 +548,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 772336966}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1486354125}
-        m_TargetAssemblyTypeName: LVLLOADER, Assembly-CSharp
-        m_MethodName: LoadNextLevel
+      - m_Target: {fileID: 772336972}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: LoadNextScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -551,7 +587,7 @@ Animator:
   m_GameObject: {fileID: 772336963}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 645461f04a83f034c89054da976ec060, type: 2}
+  m_Controller: {fileID: 9100000, guid: 04f734a1b761e384b97d92674b101dbf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -561,6 +597,30 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &772336971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772336963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db41edc7977479648b386139ced66378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &772336972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772336963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74ecfcb264e95e428f981f57464bf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1045181287
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,6 +835,8 @@ GameObject:
   - component: {fileID: 1350761522}
   - component: {fileID: 1350761521}
   - component: {fileID: 1350761523}
+  - component: {fileID: 1350761525}
+  - component: {fileID: 1350761524}
   m_Layer: 5
   m_Name: exit
   m_TagString: Untagged
@@ -879,14 +941,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1350761521}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1486354125}
-        m_TargetAssemblyTypeName: LVLLOADER, Assembly-CSharp
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 1350761525}
+        m_TargetAssemblyTypeName: Exit_script, Assembly-CSharp
+        m_MethodName: button_exit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -896,6 +958,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1350761524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350761519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db41edc7977479648b386139ced66378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1350761525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350761519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b721e269ae06e4d9f58a6f1cae15d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1486354123
 GameObject:
   m_ObjectHideFlags: 0
