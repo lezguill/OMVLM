@@ -8,7 +8,7 @@ public class LoadScene : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Cinematic1");
+        if (SceneManager.GetActiveScene().name == "Cinematic1")
         {
             StartCoroutine(LoadNextSceneAfter());
         }
