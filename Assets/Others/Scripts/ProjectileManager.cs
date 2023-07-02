@@ -49,7 +49,6 @@ public class ProjectileManager : MonoBehaviour
                 canTravel = CanTravelTowards(chargingPosition, defaultSpeed);
                 power += 0.1f;
                 attackPosition = startingPosition + character.transform.forward * range * power;
-                Debug.Log("Loading");
             }
             else
             {
