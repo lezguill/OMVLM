@@ -34,15 +34,22 @@ public class ProjectileManager : MonoBehaviour
     { 
         if (character.isAiming && isReady)
         {
-            if (!willAttack) { startingPosition = transform.position; }
+            // First Iteration after Aiming starts
+            if (!willAttack) 
+            { 
+                startingPosition = transform.position; 
+                willAttack = true;
+                power = 0f;
+                canTravel = true;
+            }
         // Charging State: while right click is hold & the ball is ready
-            if (canTravel == false || (!Input.GetButtonUp("Aim") && !Input.GetButtonDown("Aim")) == false)
+            if (canTravel && !Input.GetButtonUp("Aim"))
             {
                 chargingPosition = target.position + (Vector3.right+Vector3.up) * aimingOffset;
                 canTravel = CanTravelTowards(chargingPosition, defaultSpeed);
                 power += 0.1f;
                 attackPosition = startingPosition + character.transform.forward * range * power;
-                willAttack = true;
+                Debug.Log("Loading");
             }
             else
             {
