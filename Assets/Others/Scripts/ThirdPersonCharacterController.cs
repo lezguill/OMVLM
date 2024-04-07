@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ThirdPersonCharacterController : MonoBehaviour
 {
@@ -32,11 +33,17 @@ public class ThirdPersonCharacterController : MonoBehaviour
     private float actualSpeed;
     public float jumpForce;
 
+    public int numberOfEnemies;
+    public int numberOfEnemiesKilled;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         aimingTransitionTime = mainCam.GetComponent<Cinemachine.CinemachineBrain>().m_DefaultBlend.m_Time;
+        numberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        Debug.Log(numberOfEnemies);
+        Debug.Log(numberOfEnemiesKilled);
     }
 
     // Update is called once per frame
@@ -50,6 +57,14 @@ public class ThirdPersonCharacterController : MonoBehaviour
                 MovementManager();
                 AimManager();
             }
+        }
+        if (numberOfEnemiesKilled >= numberOfEnemies)
+        {
+            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                Destroy(enemy);
+            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
         }
     }
     public void Die()

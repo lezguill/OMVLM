@@ -25,6 +25,7 @@ public class EnemyAI : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    private bool enemyCounted=false;
     private Animator playerState;
 
     private void Awake()
@@ -58,6 +59,15 @@ public class EnemyAI : MonoBehaviour
             else if (playerInAttackRange && playerInSightRange && !anim.GetBool("isAttacking"))
             {
                 AttackPlayer();
+            }
+        }
+        else
+        {
+            if (enemyCounted == false)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonCharacterController>().numberOfEnemiesKilled += 1;
+                anim.SetTrigger("DeathAction");
+                enemyCounted=true;
             }
         }
     }
@@ -126,8 +136,9 @@ public class EnemyAI : MonoBehaviour
     }
     public void Die()
     {
+        
         anim.SetBool("isAlive", false);
-        anim.SetTrigger("DeathAction");
+        
     }
 
         private void OnDrawGizmosSelected()
